@@ -13,17 +13,33 @@
 # [3] http://en.wikipedia.org/wiki/Randomized_Hough_transform
 # ========================================================================================= 
 #
+# Usage:
+# [PARAMETERS] = hough_ellipse(IMG, MIN2A = 10, MIN_VOTES = 10)
+#
+# Inputs:
+# IMG is the inputs image. Images composed of only edges are better.
+# MIN2A is the minimum length of the major axis (default 10).
+# MIN_VOTES is the minimum number of votes on a "b" value (half-length of the minor 
+#   axis) to validate the existence of an ellipse.
+#
+# Outputs:
+# PARAMETERS is the parameters of the best fitted ellipse on the image and is 
+#   composed of [x0 y0 a b alpha] (ellipse's center, major and minor 
+#   half-length axis and orientation, respectively).
+# 
+# 
+# Possible improvement: to return a matrix with all best fitted ellipses on the 
+# image. It adds another loop to the algorithm.
 
+function [parameters] = hough_ellipse(img, min2a = 10, min_votes = 10)
 
-function [parameters] = hough_ellipse(img)
-
-    MIN_MAJOR_DISTANCE = 10;
-    MIN_VOTES = 10;
     [width height] = size(img);
     %% Finding all nonzero pixels of the image, possible ellipse's pixels.
     [ys xs] = find(img);
     pixels = [xs ys];
-    %% Accumulator for the minor axis' half-length.
+    %% Accumulator for the minor axis' half-length. The indexes correspond to the
+    %% possible b values. 
+    %% TODO: the data structure can be improved (tree with the possible values?).
     acc = zeros(1, max(width, height)/2);
     %% ij1, ij2 are indexes of (x1, y1) and (x2, y2), following the reference [1].
     for ij1 = 1:(length(xs)-1)
@@ -34,7 +50,7 @@ function [parameters] = hough_ellipse(img)
             y2 = pixels(ij2, 2);
             d12 = norm([x1 y1] - [x2 y2]);
             acc = acc * 0;
-            if  x1 - x2 && d12 > MIN_MAJOR_DISTANCE
+            if  x1 - x2 && d12 > min2a
                 %% Center
                 x0 = (x1 + x2)/2;
                 y0 = (y1 + y2)/2;
@@ -70,9 +86,10 @@ function [parameters] = hough_ellipse(img)
                 endfor
                 %% Taking the highest score.
                 [sv si] = max(acc);
-                if sv > MIN_VOTES 
+                if sv > min_votes
                     %% Ellipse detected!
-                    parameters = [x0 y0 a b alpha];
+                    %% The index si gives us the best b value.
+                    parameters = [x0 y0 a si alpha];
                     return;
                 endif
             endif
