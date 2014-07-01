@@ -52,7 +52,9 @@ that it preserves better the differences between the baselines and handwritings 
 generates smoother boundaries than binary operations.
 
 The code here was generalized to be able to remove straight lines in any direction on 
-gray scale images. The author
+gray scale images.
+
+The algorithm can be tested using the following lines in Octave:
 
 ```matlab 
 octave> img = imread('resources/dut.jpg');
