@@ -7,6 +7,7 @@ of more complex ones.
 Implemented techniques:
 
 * ellipse detection
+* baseline removal
 
 ## Ellipse detection 
 
@@ -41,6 +42,30 @@ octave:5> drawEllipse(110.5, 74.5, 82.5, 37, 0)
 
 A window should pop and show a blue ellipse (estimated) over a white one (original).
 
+## Baseline removal 
+
+The implemented algorithm is used to remove baselines of bank checks and can be found
+in 
+[[2]](http://www.ee.bgu.ac.il/~dinstein/stip2002/Seminar_papers/Hershkovitz_Extraction%20of%20bankcheck.pdf).
+It is based on mathematical morphological operations in gray-level and the author claims
+that it preserves better the differences between the baselines and handwritings and 
+generates smoother boundaries than binary operations.
+
+The code here was generalized to be able to remove straight lines in any direction on 
+gray scale images. The author
+
+```matlab 
+octave> img = imread('resources/dut.jpg');
+octave> gray = rgb2gray (img);
+octave> h_img = baseline_removal(gray, 20, 3);
+octave> v_img = baseline_removal(gray, 20, 3, 90);
+octave> subplot(1,3,1), imshow(gray)
+octave> subplot(1,3,2), imshow(h_img)
+octave> subplot(1,3,3), imshow(v_img)
+```
+
 ## References
 
 [1] Y. Xie and Q. Ji, "A new efficient ellipse detection method", Pattern Recognition, 2002. Proceedings. 16th, vol. 2, pp. 957–960, 2002.
+
+[2] Ye, X., Cheriet, M., Suen, C., & Liu, K. (1999). Extraction of bankcheck items by mathematical morphology. International Journal on Document …, 2(2-3), 53–66. doi:10.1007/s100320050037
