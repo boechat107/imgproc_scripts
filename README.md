@@ -66,8 +66,30 @@ octave> subplot(1,3,2), imshow(h_img)
 octave> subplot(1,3,3), imshow(v_img)
 ```
 
+## Fast inpaiting
+
+The [*inpainting*](http://www.rabbitmq.com/tutorials/tutorial-two-python.html)
+technique aims to reconstruct damaged or missing parts of an image.
+The implemented technique is described in [3] and seems to be a good start on
+the field because of its simplicity.
+
+The script `inpainting_test.m` can be run to see an example.
+
+```matlab
+octave:1> inpainting_test
+warning: your version of GraphicsMagick limits images to 8 bits per pixel
+Elapsed time is 0.0892851 seconds.
+```
+
+![example](https://github.com/boechat107/imgproc_scripts/blob/master/resources/inpaint_ex.png)
+
+[Here](https://sites.google.com/site/rexstribeofimageprocessing/Home/image-inpainting)
+there are more examples of the usage of this technique.
+
 ## References
 
 [1] Y. Xie and Q. Ji, "A new efficient ellipse detection method", Pattern Recognition, 2002. Proceedings. 16th, vol. 2, pp. 957–960, 2002.
 
 [2] Ye, X., Cheriet, M., Suen, C., & Liu, K. (1999). Extraction of bankcheck items by mathematical morphology. International Journal on Document …, 2(2-3), 53–66. doi:10.1007/s100320050037
+
+[3] Oliveira, M., Bowen, B., Richard, M., & Chang, Y. (2001). Fast digital image inpainting. Appeared in the Proceedings of the International Conference on Visualization, Imaging and Image Processing, (Viip).
