@@ -1,4 +1,24 @@
-function [out] = inpainting(img, mask)
+## ========================================================================================= 
+## Author: Andre A. Boechat
+## File: inpainting.m
+## Date: August 29, 2014, 03:06:33 PM
+## Description: Implementation of a fast inpainting technique.
+## 
+## Reference: 
+## Oliveira, M., Bowen, B., Richard, M., & Chang, Y. (2001).
+## Fast digital image inpainting. Appeared in the Proceedings of the
+## International Conference on Visualization, Imaging and Image Processing.
+## ========================================================================================= 
+## 
+## Usage:
+## [RET] = inpainting(IMG, MASK, TOL = .1)
+## 
+##     IMG is the input image (gray scale or color).
+##     MASK is the mask image containing the region of interest (1 values).
+##     TOL is the tolerance of the roi's difference between 2 successive iterations.
+## 
+
+function [out] = inpainting(img, mask, tol=.1)
     [nrows ncols nch] = size(img);
     %% Checking if the image and the mask have the same size.
     assert([nrows ncols] == size(mask),
@@ -17,16 +37,13 @@ function [out] = inpainting(img, mask)
     out = img .* (1 - mmask);
     %% Diffusion iteration.
     maskDiff = Inf;
-    figure
-    imshow(out);
-    hold on;
-    for i = 1:50
+    while maskDiff > tol
         tempImg = imfilter(out, kernel1, "conv");
-        maskDiff = mean(mean(abs(out(mmaskIdxs) - tempImg(mmaskIdxs))));
+        %% Calculating the roi's difference between 2 successive iterations.
+        maskDiff = mean(abs(
+                    %% We need to use something bigger than the int8 of the images
+                    %% because we need to handle possible negative numbers here.
+                    int16(out(mmaskIdxs)) - int16(tempImg(mmaskIdxs))));
         out(mmaskIdxs) = tempImg(mmaskIdxs);
-        imshow(out)
-        pause
-        %printf("Roi difference: %f\n", maskDiff)
-    endfor
-    hold off;
+    endwhile
 endfunction
