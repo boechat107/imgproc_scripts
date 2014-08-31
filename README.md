@@ -66,7 +66,7 @@ octave> subplot(1,3,2), imshow(h_img)
 octave> subplot(1,3,3), imshow(v_img)
 ```
 
-## Fast inpaiting
+## Fast inpainting
 
 The [*inpainting*](http://www.rabbitmq.com/tutorials/tutorial-two-python.html)
 technique aims to reconstruct damaged or missing parts of an image.
