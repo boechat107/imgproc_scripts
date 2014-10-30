@@ -93,3 +93,7 @@ there are more examples of the usage of this technique.
 [2] Ye, X., Cheriet, M., Suen, C., & Liu, K. (1999). Extraction of bankcheck items by mathematical morphology. International Journal on Document …, 2(2-3), 53–66. doi:10.1007/s100320050037
 
 [3] Oliveira, M., Bowen, B., Richard, M., & Chang, Y. (2001). Fast digital image inpainting. Appeared in the Proceedings of the International Conference on Visualization, Imaging and Image Processing, (Viip).
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/boechat107/imgproc_scripts/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
