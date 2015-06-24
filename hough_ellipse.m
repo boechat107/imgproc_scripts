@@ -79,8 +79,12 @@ function [parameters] = hough_ellipse(img, min2a = 10, min_votes = 10)
                     sin2_tau = 1 - cos2_tau;
                     b = round(sqrt((a^2 * d03^2 * sin2_tau) /...
                                 (a^2 - d03^2 * cos2_tau)));
-                    %% Changing the score of the accumulator. 
-                    if b > 0
+                    %% Changing the score of the accumulator, if b is a valid value.
+                    %% NOTE: the accumulator's length gives us the biggest expected
+                    %% value for b, which means, in this current implementation,
+                    %% we wouldn't detect ellipses whose half of minor axis is
+                    %% greater than the image's size (look at the acc's declaration).
+                    if b > 0 && b <= length(acc)
                         acc(b)++;
                     endif
                 endfor
