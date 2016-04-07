@@ -8,6 +8,7 @@ Implemented techniques:
 
 * ellipse detection
 * baseline removal
+* fast inpainting
 
 ## Ellipse detection 
 
